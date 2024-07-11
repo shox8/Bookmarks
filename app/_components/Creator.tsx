@@ -1,4 +1,5 @@
-"use client"
+"use client";
+import React from "react";
 import {
   Button,
   Modal,
@@ -8,7 +9,7 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@nextui-org/react";
-import React from "react";
+import { HiOutlinePlus } from "react-icons/hi";
 
 const Creator = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -19,13 +20,15 @@ const Creator = () => {
 
   return (
     <>
-      <Button onClick={onOpenChange}>Open</Button>
+      <Button onClick={onOpenChange} startContent={<HiOutlinePlus />}>
+        New
+      </Button>
       <Modal isOpen={isOpen} placement={"center"} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Modal Title
+                Create new bookmark
               </ModalHeader>
               <ModalBody>
                 <p>
