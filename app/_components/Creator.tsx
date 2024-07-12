@@ -14,15 +14,6 @@ import { HiOutlinePlus } from "react-icons/hi";
 import { Bookmark } from "../types";
 import axios from "axios";
 
-type Keys = {
-  key: string;
-  labelPlacement: "outside" | "inside" | "outside-left" | undefined;
-};
-
-const placement = "outside";
-
-const keys: Keys = { key: placement, labelPlacement: placement };
-
 const Creator = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [state, setState] = useState<Bookmark>({ title: "", url: "" });
@@ -50,17 +41,17 @@ const Creator = () => {
               </ModalHeader>
               <ModalBody>
                 <Input
-                  {...keys}
                   label="Title"
                   value={state.title}
+                  labelPlacement="outside"
                   onChange={(e) =>
                     setState((p) => ({ ...p, title: e.target.value }))
                   }
                 />
                 <Input
-                  {...keys}
                   label="Website Url"
                   value={state.url}
+                  labelPlacement="outside"
                   onChange={(e) =>
                     setState((p) => ({ ...p, url: e.target.value }))
                   }
