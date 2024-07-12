@@ -3,6 +3,7 @@ import Creator from "./_components/Creator";
 import { Input, NextUIProvider } from "@nextui-org/react";
 import { IoSearch } from "react-icons/io5";
 import { TbBookmarksFilled } from "react-icons/tb";
+import "./page.scss";
 
 const Home = () => {
   return (
@@ -19,6 +20,7 @@ const Home = () => {
         />
         <Creator />
       </header>
+      <div className="bookmarks"></div>
     </NextUIProvider>
   );
 };

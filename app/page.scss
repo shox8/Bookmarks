@@ -1,0 +1,15 @@
+header {
+    gap: 20px;
+}
+
+.bookmarks {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+@media screen and (max-width: 600px) {
+    header {
+        flex-wrap: wrap;
+    }
+}

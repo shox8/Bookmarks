@@ -1,7 +1,8 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
+  Input,
   Modal,
   ModalBody,
   ModalContent,
@@ -11,10 +12,26 @@ import {
 } from "@nextui-org/react";
 import { HiOutlinePlus } from "react-icons/hi";
 
+type Bookmark = {
+  title: string;
+  url: string;
+};
+
+type Keys = {
+  key: string;
+  labelPlacement: "outside" | "inside" | "outside-left" | undefined;
+};
+
+const placement = "outside";
+
+const keys: Keys = { key: placement, labelPlacement: placement };
+
 const Creator = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [state, setState] = useState<Bookmark>({ title: "", url: "" });
 
   const create = () => {
+    
     onOpenChange();
   };
 
@@ -31,22 +48,32 @@ const Creator = () => {
                 Create new bookmark
               </ModalHeader>
               <ModalBody>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
+                <Input
+                  {...keys}
+                  label="Title"
+                  value={state.title}
+                  onChange={(e) =>
+                    setState((p) => ({ ...p, title: e.target.value }))
+                  }
+                />
+                <Input
+                  {...keys}
+                  label="Website Url"
+                  value={state.url}
+                  onChange={(e) =>
+                    setState((p) => ({ ...p, url: e.target.value }))
+                  }
+                />
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
                   Close
                 </Button>
-                <Button color="primary" onPress={create}>
+                <Button
+                  color="primary"
+                  onPress={create}
+                  isDisabled={state.title === "" || state.url === ""}
+                >
                   Create
                 </Button>
               </ModalFooter>
