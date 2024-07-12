@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import {
   Button,
   Input,
@@ -14,17 +14,29 @@ import { HiOutlinePlus } from "react-icons/hi";
 import { Bookmark } from "../types";
 import axios from "axios";
 
-const Creator = () => {
+const item = { title: "", url: "" };
+
+const Creator = ({
+  setBookmarks,
+}: {
+  setBookmarks: Dispatch<SetStateAction<any>>;
+}) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [state, setState] = useState<Bookmark>({ title: "", url: "" });
+  const [state, setState] = useState<Bookmark>(item);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const create = () => {
+    setLoading(true);
     axios.post("/api/getLogo", { url: state.url }).then(({ data }) => {
-      axios.post("/api/bookmarks", { ...state, url: data }).then(({ data }) => {
-        console.log(data);
-      });
+      axios
+        .post("/api/bookmarks", { ...state, url: data })
+        .then(({ data }: { data: Bookmark }) => {
+          onOpenChange();
+          setLoading(false);
+          setState(item);
+          setBookmarks((p: Bookmark[]) => [...p, data]);
+        });
     });
-    onOpenChange();
   };
 
   return (
@@ -64,6 +76,7 @@ const Creator = () => {
                 <Button
                   color="primary"
                   onPress={create}
+                  isLoading={loading}
                   isDisabled={state.title === "" || state.url === ""}
                 >
                   Create

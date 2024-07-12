@@ -1,11 +1,22 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Creator from "./_components/Creator";
+import axios from "axios";
 import { Input, NextUIProvider } from "@nextui-org/react";
 import { IoSearch } from "react-icons/io5";
 import { TbBookmarksFilled } from "react-icons/tb";
+import { Bookmark } from "./types";
 import "./page.scss";
 
 const Home = () => {
+  const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
+
+  useEffect(() => {
+    axios.get("/api/bookmarks").then(({ data }) => {
+      setBookmarks(data);
+    });
+  }, []);
+
   return (
     <NextUIProvider>
       <header className="flex p-4 items-center justify-between">
@@ -18,9 +29,13 @@ const Home = () => {
           startContent={<IoSearch />}
           className="w-[250px]"
         />
-        <Creator />
+        <Creator setBookmarks={setBookmarks} />
       </header>
-      <div className="bookmarks"></div>
+      <div className="bookmarks">
+        {bookmarks.map((item, index) => (
+          <div key={index}>{item.title}</div>
+        ))}
+      </div>
     </NextUIProvider>
   );
 };
