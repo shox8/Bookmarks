@@ -11,11 +11,8 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import { HiOutlinePlus } from "react-icons/hi";
-
-type Bookmark = {
-  title: string;
-  url: string;
-};
+import { Bookmark } from "../types";
+import axios from "axios";
 
 type Keys = {
   key: string;
@@ -31,7 +28,11 @@ const Creator = () => {
   const [state, setState] = useState<Bookmark>({ title: "", url: "" });
 
   const create = () => {
-    
+    axios.post("/api/getLogo", { url: state.url }).then(({ data }) => {
+      axios.post("/api/bookmarks", { ...state, url: data }).then(({ data }) => {
+        console.log(data);
+      });
+    });
     onOpenChange();
   };
 

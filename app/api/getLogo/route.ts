@@ -19,7 +19,7 @@ type WebData = {
 
 export async function POST(request: NextRequest) {
   const data = await request.json();
-  const { icons }: WebData = await GETTER(data);
+  const { icons }: WebData = await GETTER(data.url);
 
   return NextResponse.json(icons[0].src);
 }
