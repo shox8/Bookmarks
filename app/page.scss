@@ -4,8 +4,14 @@ header {
 
 .bookmarks {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
+    padding: 20px;
+}
+
+.card {
+    width: 120px;
 }
 
 @media screen and (max-width: 600px) {

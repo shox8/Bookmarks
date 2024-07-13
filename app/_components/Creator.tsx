@@ -41,7 +41,7 @@ const Creator = ({
 
   return (
     <>
-      <Button onClick={onOpenChange} startContent={<HiOutlinePlus />}>
+      <Button onClick={onOpenChange} startContent={<HiOutlinePlus />} color="warning">
         New
       </Button>
       <Modal isOpen={isOpen} placement={"center"} onOpenChange={onOpenChange}>
@@ -49,7 +49,7 @@ const Creator = ({
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Create new bookmark
+                Create new bookmark 
               </ModalHeader>
               <ModalBody>
                 <Input
@@ -74,7 +74,7 @@ const Creator = ({
                   Close
                 </Button>
                 <Button
-                  color="primary"
+                  color="success"
                   onPress={create}
                   isLoading={loading}
                   isDisabled={state.title === "" || state.url === ""}
