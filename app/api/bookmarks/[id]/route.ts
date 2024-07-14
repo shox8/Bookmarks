@@ -1,3 +1,4 @@
+import { Bookmark } from "@/app/types";
 import { db } from "@/firebase.config";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
@@ -6,13 +7,13 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const data = await request.json();
+  const data: Bookmark = await request.json();
 
-  const editedData = await updateDoc(doc(db, "bookmarks", params.id), data);
+  delete data.id;
 
-  console.log(editedData);
+  await updateDoc(doc(db, "bookmarks", params.id), data);
 
-  return NextResponse.json(editedData);
+  return NextResponse.json(data);
 }
 
 export async function DELETE(

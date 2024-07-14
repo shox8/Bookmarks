@@ -16,17 +16,23 @@ import {
   DropdownItem,
   Spinner,
   Tooltip,
+  useDisclosure,
 } from "@nextui-org/react";
 import { IoSearch } from "react-icons/io5";
 import { TbBookmarksFilled } from "react-icons/tb";
 import { Bookmark } from "./types";
 import { motion } from "framer-motion";
 import "./page.scss";
+import Editor from "./_components/Editor";
+
+const item = { title: "", url: "", icon: "" };
 
 const Home = () => {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
   const [search, setSearch] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [bookmark, setBookmark] = useState<Bookmark>(item);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   useEffect(() => {
     setLoading(true);
@@ -41,6 +47,11 @@ const Home = () => {
       const filtered = bookmarks.filter((e) => e.id !== data);
       setBookmarks(filtered);
     });
+  };
+
+  const setUpEditor = (item: Bookmark) => {
+    setBookmark(item);
+    onOpenChange();
   };
 
   return (
@@ -64,7 +75,7 @@ const Home = () => {
           <Spinner color="warning" size="lg" />
         ) : (
           bookmarks
-            .filter((e) => e.title.toLowerCase().includes(search.toLowerCase()))
+            .filter((e) => e.title?.toLowerCase().includes(search.toLowerCase()))
             .map((item: Bookmark, index) => (
               <motion.div
                 initial={{ opacity: 0 }}
@@ -104,7 +115,12 @@ const Home = () => {
                         </Button>
                       </DropdownTrigger>
                       <DropdownMenu aria-label="Static Actions">
-                        <DropdownItem key="edit">Edit</DropdownItem>
+                        <DropdownItem
+                          key="edit"
+                          onClick={() => setUpEditor(item)}
+                        >
+                          Edit
+                        </DropdownItem>
                         <DropdownItem
                           key="delete"
                           className="text-danger"
@@ -121,6 +137,12 @@ const Home = () => {
             ))
         )}
       </motion.div>
+      <Editor
+        setBookmarks={setBookmarks}
+        bookmark={bookmark}
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      />
     </NextUIProvider>
   );
 };

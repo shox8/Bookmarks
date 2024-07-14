@@ -1,5 +1,4 @@
 .mainBlock {
-    width: 100%;
     backdrop-filter: blur(30px);
     min-height: 100dvh;
 }
@@ -9,7 +8,6 @@ header {
 }
 
 .bookmarks {
-    width: 100%;
     min-height: calc(100dvh - 100px);
     display: flex;
     flex-wrap: wrap;
@@ -31,9 +29,5 @@ header {
 @media screen and (max-width: 600px) {
     header {
         flex-wrap: wrap;
-    }
-
-    .bookmarks {
-        justify-content: space-between;
     }
 }
