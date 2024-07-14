@@ -17,11 +17,22 @@ header {
 }
 
 .card {
-    width: 120px;
+    width: 150px;
+
+    text {
+        max-width: 80px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        text-wrap: nowrap;
+    }
 }
 
 @media screen and (max-width: 600px) {
     header {
         flex-wrap: wrap;
+    }
+
+    .bookmarks {
+        justify-content: space-between;
     }
 }

@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import Creator from "./_components/Creator";
 import axios from "axios";
-import { BsThreeDots } from "react-icons/bs";
 import {
   Card,
   CardBody,
@@ -16,6 +15,7 @@ import {
   DropdownMenu,
   DropdownItem,
   Spinner,
+  Tooltip,
 } from "@nextui-org/react";
 import { IoSearch } from "react-icons/io5";
 import { TbBookmarksFilled } from "react-icons/tb";
@@ -78,13 +78,11 @@ const Home = () => {
                   }
                 >
                   <CardBody className="overflow-visible p-0 flex">
-                    <div className="flex items-center gap-2 justify-center">
-                      <Avatar
-                        size="md"
-                        src={item.icon}
-                        className="my-2 p-2  "
-                      />
-                      <text>{item.title}</text>
+                    <div className="flex items-center gap-2 justify-center my-4">
+                      <Avatar size="md" src={item.icon} className="p-2" />
+                      <Tooltip content={item.title} color="warning">
+                        <text>{item.title}</text>
+                      </Tooltip>
                     </div>
                   </CardBody>
                   <CardFooter className="text-small justify-between">
@@ -95,7 +93,7 @@ const Home = () => {
                           color="warning"
                           variant="flat"
                         >
-                          <BsThreeDots />
+                          Actions
                         </Button>
                       </DropdownTrigger>
                       <DropdownMenu aria-label="Static Actions">
