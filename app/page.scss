@@ -1,4 +1,5 @@
 .mainBlock {
+    width: 100%;
     backdrop-filter: blur(30px);
     min-height: 100dvh;
 }
@@ -8,6 +9,7 @@ header {
 }
 
 .bookmarks {
+    width: 100%;
     min-height: calc(100dvh - 100px);
     display: flex;
     flex-wrap: wrap;
@@ -18,7 +20,6 @@ header {
 
 .card {
     width: 150px;
-
     text {
         max-width: 80px;
         text-overflow: ellipsis;

@@ -36,6 +36,13 @@ const Home = () => {
     });
   }, []);
 
+  const deleteBookmark = (id: string | undefined) => {
+    axios.delete(`/api/bookmarks/${id}`).then(({ data }) => {
+      const filtered = bookmarks.filter((e) => e.id !== data);
+      setBookmarks(filtered);
+    });
+  };
+
   return (
     <NextUIProvider className="mainBlock">
       <header className="flex p-4 items-center justify-between">
@@ -102,6 +109,7 @@ const Home = () => {
                           key="delete"
                           className="text-danger"
                           color="danger"
+                          onClick={() => deleteBookmark(item.id)}
                         >
                           Delete
                         </DropdownItem>
