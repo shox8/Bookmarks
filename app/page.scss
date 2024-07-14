@@ -1,8 +1,14 @@
+.mainBlock {
+    backdrop-filter: blur(30px);
+    min-height: 100dvh;
+}
+
 header {
     gap: 20px;
 }
 
 .bookmarks {
+    min-height: calc(100dvh - 100px);
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

@@ -14,7 +14,7 @@ import { HiOutlinePlus } from "react-icons/hi";
 import { Bookmark } from "../types";
 import axios from "axios";
 
-const item = { title: "", url: "" };
+const item = { title: "", url: "", icon: "" };
 
 const Creator = ({
   setBookmarks,
@@ -24,24 +24,36 @@ const Creator = ({
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [state, setState] = useState<Bookmark>(item);
   const [loading, setLoading] = useState<boolean>(false);
+  const [valid, setValid] = useState<boolean>(false);
 
   const create = () => {
     setLoading(true);
-    axios.post("/api/getLogo", { url: state.url }).then(({ data }) => {
-      axios
-        .post("/api/bookmarks", { ...state, url: data })
-        .then(({ data }: { data: Bookmark }) => {
-          onOpenChange();
-          setLoading(false);
-          setState(item);
-          setBookmarks((p: Bookmark[]) => [...p, data]);
-        });
-    });
+    axios
+      .post("/api/getLogo", { url: state.url })
+      .then(({ data }) => {
+        setValid(false);
+        axios
+          .post("/api/bookmarks", { ...state, icon: data })
+          .then(({ data }: { data: Bookmark }) => {
+            onOpenChange();
+            setLoading(false);
+            setState(item);
+            setBookmarks((p: Bookmark[]) => [...p, data]);
+          });
+      })
+      .catch(() => {
+        setValid(true);
+        setLoading(false);
+      });
   };
 
   return (
     <>
-      <Button onClick={onOpenChange} startContent={<HiOutlinePlus />} color="warning">
+      <Button
+        onClick={onOpenChange}
+        startContent={<HiOutlinePlus />}
+        color="warning"
+      >
         New
       </Button>
       <Modal isOpen={isOpen} placement={"center"} onOpenChange={onOpenChange}>
@@ -49,7 +61,7 @@ const Creator = ({
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Create new bookmark 
+                Create new bookmark
               </ModalHeader>
               <ModalBody>
                 <Input
@@ -64,6 +76,7 @@ const Creator = ({
                   label="Website Url"
                   value={state.url}
                   labelPlacement="outside"
+                  isInvalid={valid}
                   onChange={(e) =>
                     setState((p) => ({ ...p, url: e.target.value }))
                   }
