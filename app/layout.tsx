@@ -4,7 +4,10 @@ import "./globals.scss";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = { title: "Tabs", description: "Bookmarks" };
+export const metadata: Metadata = {
+  title: "Bookmarks",
+  description: "Bookmarks",
+};
 
 export default function RootLayout({
   children,
