@@ -36,10 +36,13 @@ const Home = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get("/api/bookmarks").then(({ data }) => {
-      setBookmarks(data);
-      setLoading(false);
-    });
+    axios
+      .get("/api/bookmarks")
+      .then(({ data }) => {
+        setBookmarks(data);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
   }, []);
 
   const deleteBookmark = (id: string | undefined) => {
@@ -75,7 +78,9 @@ const Home = () => {
           <Spinner color="warning" size="lg" />
         ) : (
           bookmarks
-            .filter((e) => e.title?.toLowerCase().includes(search.toLowerCase()))
+            .filter((e) =>
+              e.title?.toLowerCase().includes(search.toLowerCase())
+            )
             .map((item: Bookmark, index) => (
               <motion.div
                 initial={{ opacity: 0 }}
